@@ -8,6 +8,7 @@ public class PassengerDaoImpl implements PassengerDao {
     private static Map<Long, Passenger> passengersMap = new HashMap<>();
 
     @Override
+    @Logging
     public Passenger getPassenger(Long id) {
         if (null != passengersMap.get(id)) {
             return passengersMap.get(id);
