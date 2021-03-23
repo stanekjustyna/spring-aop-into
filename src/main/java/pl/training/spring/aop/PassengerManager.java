@@ -8,7 +8,7 @@ public class PassengerManager {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("aop.xml");
 
         PassengerDao passengerDao = (PassengerDao) context.getBean("passengerDao");
-        System.out.println(passengerDao.getPassenger(Long.valueOf(1)));
+        System.out.println(passengerDao.getPassenger(Long.valueOf(0)));
         context.close();
     }
 }
