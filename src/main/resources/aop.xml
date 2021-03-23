@@ -5,15 +5,40 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-    <bean id="passengerDao" class="pl.training.spring.aop.PassengerDaoImpl"/>
-    <bean id="loggingAspect" class="pl.training.spring.aop.LoggingAspect"/>
+    <aop:aspectj-autoproxy/>
 
-    <aop:config>
-        <aop:aspect id="loggingAspect" ref="loggingAspect">
-            <aop:pointcut id="passengerMethod"
-                          expression="execution(* pl.training.spring.aop.*.*(..))"/>
-            <aop:before pointcut-ref="passengerMethod" method="before"/>
-            <aop:after pointcut-ref="passengerMethod" method="after"/>
-        </aop:aspect>
-    </aop:config>
+    <bean id="jim" class="pl.training.spring.aop.flight.management.domain.Passenger">
+        <property name="name" value="Jim"/>
+        <property name="country" value="US"/>
+    </bean>
+
+    <bean id="jack" class="pl.training.spring.aop.flight.management.domain.Passenger">
+        <property name="name" value="Jack"/>
+        <property name="country" value="UK"/>
+    </bean>
+
+    <bean id="jill" class="pl.training.spring.aop.flight.management.domain.Passenger">
+        <property name="name" value="Jill"/>
+        <property name="country" value="AU"/>
+    </bean>
+
+    <bean id="flight" class="pl.training.spring.aop.flight.management.domain.Flight">
+        <property name="id" value="AA1234"/>
+        <property name="company" value="ABC Flights"/>
+        <property name="passengers">
+            <list>
+                <ref bean="jim"/>
+                <ref bean="jack"/>
+                <ref bean="jill"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="ticket" class="pl.training.spring.aop.flight.management.domain.Ticket">
+        <property name="passenger" ref="jim"/>
+        <property name="number" value="1234567890"/>
+    </bean>
+
+    <bean name="loggingAspect1" class="pl.training.spring.aop.flight.management.aspect.LoggingAspect1"/>
+    <bean name="loggingAspect2" class="pl.training.spring.aop.flight.management.aspect.LoggingAspect2"/>
 </beans>
