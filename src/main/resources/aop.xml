@@ -5,15 +5,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
+    <aop:aspectj-autoproxy/>
+
     <bean id="passengerDao" class="pl.training.spring.aop.PassengerDaoImpl"/>
     <bean id="loggingAspect" class="pl.training.spring.aop.LoggingAspect"/>
 
-    <aop:config>
-        <aop:aspect id="loggingAspect" ref="loggingAspect">
-            <aop:pointcut id="passengerMethod"
-                          expression="execution(* pl.training.spring.aop.*.*(..))"/>
-            <aop:before pointcut-ref="passengerMethod" method="before"/>
-            <aop:after pointcut-ref="passengerMethod" method="after"/>
-        </aop:aspect>
-    </aop:config>
 </beans>
