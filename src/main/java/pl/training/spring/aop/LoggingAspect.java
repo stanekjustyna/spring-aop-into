@@ -1,16 +1,21 @@
 package pl.training.spring.aop;
 
-import java.util.logging.Logger;
+import lombok.extern.java.Log;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 
+@Aspect
+@Log
 public class LoggingAspect {
 
-    private Logger logger = Logger.getLogger(LoggingAspect.class.getName());
-
+    @Before("execution(* *.*Passenger(..))")
     public void before() {
-        logger.info("Entering method");
+        log.info("Entering method...");
     }
 
+    @After("execution(* *.*Passenger(..))")
     public void after() {
-        logger.info("Exiting method");
+        log.info("Exiting method...");
     }
 }
