@@ -1,6 +1,7 @@
 package pl.training.spring.aop.flight.management;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import pl.training.spring.aop.flight.management.dao.PassengerDao;
 import pl.training.spring.aop.flight.management.domain.Flight;
 import pl.training.spring.aop.flight.management.domain.Passenger;
 import pl.training.spring.aop.flight.management.domain.Ticket;
@@ -24,6 +25,16 @@ public class FightsManagement {
 
         Ticket ticket = (Ticket) context.getBean("ticket");
         ticket.setNumber("0987654321");
+
+        PassengerDao passengerDaoImpl = (PassengerDao) context.getBean("passengerDaoImpl");
+        passengerDaoImpl.getPassenger(1);
+        passengerDaoImpl.getPassenger(1);
+
+        Passenger mike = new Passenger();
+        mike.setName("Mike");
+        mike.setCountry("ZZ");
+
+        passengerDaoImpl.insert(mike);
 
         context.close();
     }

@@ -2,10 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <aop:aspectj-autoproxy/>
+
+    <jdbc:embedded-database id="dataSource"/>
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:db-schema.sql"/>
+    </jdbc:initialize-database>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+        <property name="url" value="jdbc:h2:~/flightsmanagement" />
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
 
     <bean id="jim" class="pl.training.spring.aop.flight.management.domain.Passenger">
         <property name="name" value="Jim"/>
@@ -39,6 +53,12 @@
         <property name="number" value="1234567890"/>
     </bean>
 
+    <bean id="passengerDaoImpl" class="pl.training.spring.aop.flight.management.dao.PassengerDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean name="loggingAspect1" class="pl.training.spring.aop.flight.management.aspect.LoggingAspect1"/>
     <bean name="loggingAspect2" class="pl.training.spring.aop.flight.management.aspect.LoggingAspect2"/>
+    <bean name="cachingAspect" class="pl.training.spring.aop.flight.management.aspect.CachingAspect"/>
+    <bean name="countryDoesNotExistAspect" class="pl.training.spring.aop.flight.management.aspect.CountryDoesNotExistAspect"/>
 </beans>
